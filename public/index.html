@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HTTP Proxy Serving Static Content</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body {
+        min-height: 2000px;
+        padding-top: 70px;
+      }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">HTTP Proxy Serving Static Content</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>Serving static content</h1>
+        <p>This content is being served by express using the static middleware.  But using the button below we will make an AJAX request to our same domain but that will be proxied to openweathermap.org for results.</p>
+        <p>Click below to proxy a request to openweathermap.org and find out the weather in Portland, OR.</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="#" id="weather_button" role="button">Load Portland Weather&raquo;</a>
+        </p>
+        <div id="results"></div>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+
+      (function($){
+        $(function(){
+
+          $("#weather_button").on("click", function(e){
+            e.preventDefault();
+            $.ajax('/data/2.5/weather?q=Portland,OR')
+            .done(function(data){
+              $("#results").text("Current weather in Portland, OR: " + data.weather[0].description);
+            });
+          });
+         
+
+        })
+      })(jQuery)
+    </script>
+  </body>
+</html>
